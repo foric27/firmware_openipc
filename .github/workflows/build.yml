@@ -3,8 +3,8 @@ on:
   pull_request:
     branches:
       - master
-  schedule:
-    - cron: '30 22 * * *'
+  # schedule:
+    # - cron: '30 22 * * *'
   workflow_dispatch:
 
 env:
@@ -20,7 +20,7 @@ jobs:
       matrix:
         include:
           # Sigmastar [I6]
-          - {"platform": "ssc325", "release": "lite"}
+          # - {"platform": "ssc325", "release": "lite"}
           - {"platform": "ssc325de", "release": "lite"}
 
           # Sigmastar [I6B]
@@ -70,9 +70,9 @@ jobs:
           # - {"platform": "t40", "release": "ultimate"}
 
           # Hisilicon [HI3516AV100]
-          - {"platform": "hi3516av100", "release": "lite"}
-          - {"platform": "hi3516av100", "release": "ultimate"}
-          - {"platform": "hi3516dv100", "release": "lite"}
+          # - {"platform": "hi3516av100", "release": "lite"}
+          # - {"platform": "hi3516av100", "release": "ultimate"}
+          # - {"platform": "hi3516dv100", "release": "lite"}
           - {"platform": "hi3516dv100", "release": "ultimate"}
 
           # Hisilicon [HI3516CV100]
@@ -127,24 +127,24 @@ jobs:
           # - {"platform": "gk7102s", "release": "lite"}
 
           # Goke [GK7205V200]
-          - {"platform": "gk7202v300", "release": "lite"}
-          - {"platform": "gk7205v200", "release": "lte"}
-          - {"platform": "gk7205v200", "release": "fpv"}
-          - {"platform": "gk7205v200", "release": "rubyfpv"}
-          - {"platform": "gk7205v200", "release": "venc"}
-          - {"platform": "gk7205v200", "release": "lite"}
-          - {"platform": "gk7205v200", "release": "ultimate"}
-          - {"platform": "gk7205v210", "release": "fpv"}
-          - {"platform": "gk7205v210", "release": "rubyfpv"}
-          - {"platform": "gk7205v210", "release": "venc"}
+          # - {"platform": "gk7202v300", "release": "lite"}
+          # - {"platform": "gk7205v200", "release": "lte"}
+          # - {"platform": "gk7205v200", "release": "fpv"}
+          # - {"platform": "gk7205v200", "release": "rubyfpv"}
+          # - {"platform": "gk7205v200", "release": "venc"}
+          # - {"platform": "gk7205v200", "release": "lite"}
+          # - {"platform": "gk7205v200", "release": "ultimate"}
+          # - {"platform": "gk7205v210", "release": "fpv"}
+          # - {"platform": "gk7205v210", "release": "rubyfpv"}
+          # - {"platform": "gk7205v210", "release": "venc"}
           - {"platform": "gk7205v210", "release": "lite"}
-          - {"platform": "gk7205v300", "release": "lte"}
-          - {"platform": "gk7205v300", "release": "fpv"}
-          - {"platform": "gk7205v300", "release": "rubyfpv"}
-          - {"platform": "gk7205v300", "release": "venc"}
-          - {"platform": "gk7205v300", "release": "lite"}
-          - {"platform": "gk7205v300", "release": "ultimate"}
-          - {"platform": "gk7605v100", "release": "lite"}
+          # - {"platform": "gk7205v300", "release": "lte"}
+          # - {"platform": "gk7205v300", "release": "fpv"}
+          # - {"platform": "gk7205v300", "release": "rubyfpv"}
+          # - {"platform": "gk7205v300", "release": "venc"}
+          # - {"platform": "gk7205v300", "release": "lite"}
+          # - {"platform": "gk7205v300", "release": "ultimate"}
+          # - {"platform": "gk7605v100", "release": "lite"}
 
           # Allwinner
           # - {"platform": "v851s", "release": "lite"}
@@ -227,13 +227,13 @@ jobs:
             ${{env.NORFW}}
             ${{env.NANDFW}}
 
-      - name: Send binary
-        if: github.event_name != 'pull_request' && env.NORFW
-        run: |
-          TG_MSG="Commit: ${GIT_HASH}\nBranch: ${GIT_BRANCH}\nTag: ${TAG_NAME}\nTime: ${TIME}\n\n"
-          TG_ICON="\xE2\x9C\x85 GitHub Actions"
-          TG_HEADER=$(echo -e ${TG_MSG}${TG_ICON})
-          TG_TOKEN=${{secrets.TELEGRAM_TOKEN_BOT_OPENIPC}}
-          TG_CHANNEL=${{secrets.TELEGRAM_CHANNEL_OPENIPC_DEV}}
-          HTTP=$(curl -s -o /dev/null -w %{http_code} https://api.telegram.org/bot${TG_TOKEN}/sendDocument -F chat_id=${TG_CHANNEL} -F caption="${TG_HEADER}" -F document=@${NORFW})
-          echo Telegram response: ${HTTP}
+      # - name: Send binary
+        # if: github.event_name != 'pull_request' && env.NORFW
+        # run: |
+          # TG_MSG="Commit: ${GIT_HASH}\nBranch: ${GIT_BRANCH}\nTag: ${TAG_NAME}\nTime: ${TIME}\n\n"
+          # TG_ICON="\xE2\x9C\x85 GitHub Actions"
+          # TG_HEADER=$(echo -e ${TG_MSG}${TG_ICON})
+          # TG_TOKEN=${{secrets.TELEGRAM_TOKEN_BOT_OPENIPC}}
+          # TG_CHANNEL=${{secrets.TELEGRAM_CHANNEL_OPENIPC_DEV}}
+          # HTTP=$(curl -s -o /dev/null -w %{http_code} https://api.telegram.org/bot${TG_TOKEN}/sendDocument -F chat_id=${TG_CHANNEL} -F caption="${TG_HEADER}" -F document=@${NORFW})
+          # echo Telegram response: ${HTTP}
