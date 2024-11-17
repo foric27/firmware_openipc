@@ -13,8 +13,8 @@ define HISILICON_OSDRV_HI3516AV100_INSTALL_TARGET_CMDS
 	$(INSTALL) -m 755 -d $(TARGET_DIR)/etc/sensors
 	$(INSTALL) -m 644 -t $(TARGET_DIR)/etc/sensors $(HISILICON_OSDRV_HI3516AV100_PKGDIR)/files/sensor/config/*.ini
 
-	$(INSTALL) -m 755 -d $(TARGET_DIR)/etc/sensors/WDR
-	$(INSTALL) -m 644 -t $(TARGET_DIR)/etc/sensors/WDR $(HISILICON_OSDRV_HI3516AV100_PKGDIR)/files/sensor/config/WDR/*.ini
+	# $(INSTALL) -m 755 -d $(TARGET_DIR)/etc/sensors/WDR
+	# $(INSTALL) -m 644 -t $(TARGET_DIR)/etc/sensors/WDR $(HISILICON_OSDRV_HI3516AV100_PKGDIR)/files/sensor/config/WDR/*.ini
 
 	$(INSTALL) -m 755 -d $(TARGET_DIR)/lib/modules/4.9.37/hisilicon
 	$(INSTALL) -m 644 -t $(TARGET_DIR)/lib/modules/4.9.37/hisilicon $(HISILICON_OSDRV_HI3516AV100_PKGDIR)/files/kmod/acodec.ko
