@@ -34,21 +34,21 @@ report_error()
 insert_audio()
 {
 	insmod acodec.ko
-	#insmod hidmac.ko
+	insmod hidmac.ko
 	insmod hi3516a_aio.ko
 	insmod hi3516a_ai.ko
 	insmod hi3516a_ao.ko
 	insmod hi3516a_aenc.ko
 	insmod hi3516a_adec.ko
-	#insmod extdrv/tlv_320aic31.ko
-	#insmod extdrv/ak7756.ko 
+	insmod extdrv/tlv_320aic31.ko
+	insmod extdrv/ak7756.ko 
 	echo "insert audio"
 }
 
 remove_audio()
 {
-	#rmmod -w tlv_320aic31.ko
-	#rmmod -w ak7756.ko
+	rmmod -w tlv_320aic31.ko
+	rmmod -w ak7756.ko
 	rmmod -w hi3516a_adec
 	rmmod -w hi3516a_aenc
 	rmmod -w hi3516a_ao
