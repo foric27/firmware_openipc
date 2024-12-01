@@ -21,6 +21,7 @@ report_error() {
 }
 
 insert_detect() {
+		echo "==== load insert_detect ===="
         cd /lib/modules/4.9.37/hisilicon
         insmod mmz.ko mmz=anonymous,0,$mmz_start,$mmz_size anony=1 || report_error
         insmod hi_media.ko
@@ -270,13 +271,61 @@ insert_sns() {
         esac
 
 }
-insert_ko() {
-		cd /lib/modules/4.9.37/hisilicon
-        sys_config
+# insert_ko() {
+		# cd /lib/modules/4.9.37/hisilicon
+        # sys_config
 	 
-		insmod mmz.ko mmz=anonymous,0,$mmz_start,$mmz_size anony=1 || report_error
+		# insmod mmz.ko mmz=anonymous,0,$mmz_start,$mmz_size anony=1 || report_error
 
-        #insert_mmz
+        # #insert_mmz
+
+        # insmod hi_media.ko
+        # insmod hi3516a_base.ko
+
+        # insmod hi3516a_sys.ko vi_vpss_online=$b_arg_online sensor=$SENSOR mem_total=$mem_total || report_error
+
+        # insmod hi3516a_tde.ko
+        # insmod hi3516a_region.ko
+        # insmod hi3516a_vgs.ko
+
+		# insmod hi3516a_isp.ko
+		
+        # insmod hi3516a_viu.ko detect_err_frame=10
+        # insmod hi3516a_vpss.ko rfr_frame_comp=1
+        # insmod hi3516a_vou.ko
+        # #insmod hi3516a_vou.ko transparentTransmit=1 #enable transparentTransmit
+        # #insmod hifb.ko video="hifb:vram0_size:1620"     # default pal
+
+        # insmod hi3516a_rc.ko
+        # insmod hi3516a_venc.ko
+        # insmod hi3516a_chnl.ko #ChnlLowPower=1
+        # insmod hi3516a_h264e.ko #H264eMiniBufMode=1
+        # insmod hi3516a_h265e.ko #H265eMiniBufMode=1
+        # insmod hi3516a_jpege.ko
+		# insmod hi3516a_vda.ko
+        # #insmod hi3516a_ive.ko save_power=0
+        # insmod hi3516a_ive.ko
+
+        # insmod sensor_i2c.ko
+        # insmod pwm.ko
+        # insmod piris.ko
+		# #insmod adv_7441.ko
+		# insmod sil9024.ko norm=12    #1080P@30fps		
+
+        # insert_sns
+        # insert_audio
+
+        # insmod hi_mipi.ko
+		# #insmod hi3516a_pm.ko
+        # #insmod wdt.ko #nodeamon=1
+        # echo "==== Your input Sensor type is $SENSOR ===="
+# }
+
+insert_ko() {
+		echo "==== load insert_ko ===="
+        sys_config
+
+        insert_mmz
 
         insmod hi_media.ko
         insmod hi3516a_base.ko
@@ -287,8 +336,8 @@ insert_ko() {
         insmod hi3516a_region.ko
         insmod hi3516a_vgs.ko
 
-		insmod hi3516a_isp.ko
-		
+        insert_isp
+
         insmod hi3516a_viu.ko detect_err_frame=10
         insmod hi3516a_vpss.ko rfr_frame_comp=1
         insmod hi3516a_vou.ko
@@ -298,25 +347,21 @@ insert_ko() {
         insmod hi3516a_rc.ko
         insmod hi3516a_venc.ko
         insmod hi3516a_chnl.ko #ChnlLowPower=1
-        insmod hi3516a_h264e.ko #H264eMiniBufMode=1
-        insmod hi3516a_h265e.ko #H265eMiniBufMode=1
+        insmod hi3516a_h264e.ko H264eMiniBufMode=1
+        insmod hi3516a_h265e.ko H265eMiniBufMode=1
         insmod hi3516a_jpege.ko
-		insmod hi3516a_vda.ko
         #insmod hi3516a_ive.ko save_power=0
-        insmod hi3516a_ive.ko
+        #insmod hi3516a_ive.ko
 
         insmod sensor_i2c.ko
         insmod pwm.ko
-        insmod piris.ko
-		#insmod adv_7441.ko
-		insmod sil9024.ko norm=12    #1080P@30fps		
+        #insmod piris.ko
 
         insert_sns
         insert_audio
 
         insmod hi_mipi.ko
-		#insmod hi3516a_pm.ko
-        #insmod wdt.ko #nodeamon=1
+        insmod wdt.ko #nodeamon=1
         echo "==== Your input Sensor type is $SENSOR ===="
 }
 

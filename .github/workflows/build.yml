@@ -21,7 +21,7 @@ jobs:
         include:
           # Sigmastar [I6]
           # - {"platform": "ssc325", "release": "lite"}
-          - {"platform": "ssc325de", "release": "lite"}
+          # - {"platform": "ssc325de", "release": "lite"}
 
           # Sigmastar [I6B]
           # - {"platform": "ssc333", "release": "lite"}
@@ -137,7 +137,7 @@ jobs:
           # - {"platform": "gk7205v210", "release": "fpv"}
           # - {"platform": "gk7205v210", "release": "rubyfpv"}
           # - {"platform": "gk7205v210", "release": "venc"}
-          - {"platform": "gk7205v210", "release": "lite"}
+          # - {"platform": "gk7205v210", "release": "lite"}
           # - {"platform": "gk7205v300", "release": "lte"}
           # - {"platform": "gk7205v300", "release": "fpv"}
           # - {"platform": "gk7205v300", "release": "rubyfpv"}
