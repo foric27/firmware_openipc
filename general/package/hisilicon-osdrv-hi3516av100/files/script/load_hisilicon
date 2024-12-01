@@ -295,7 +295,7 @@ insert_ko() {
         insmod hi3516a_vpss.ko rfr_frame_comp=1
         insmod hi3516a_vou.ko
         #insmod hi3516a_vou.ko transparentTransmit=1 #enable transparentTransmit
-        insmod hifb.ko video="hifb:vram0_size:1620"     # default pal
+        #insmod hifb.ko video="hifb:vram0_size:1620"     # default pal
 
         insmod hi3516a_rc.ko
         insmod hi3516a_venc.ko
