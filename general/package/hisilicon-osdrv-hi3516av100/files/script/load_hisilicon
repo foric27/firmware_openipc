@@ -100,7 +100,8 @@ sys_config() {
         #devmem 0x200300d8 32 0xa;      # ddrt
 
         # system configuration
-        devmem 0x201200E0 32 0xd # internal codec:AIO MCLK out, CODEC AIO TX MCLK
+        #devmem 0x201200E0 32 0xd # internal codec:AIO MCLK out, CODEC AIO TX MCLK # Internal CODEC, MIC or LINEIN analog input, ACOUT analog output
+		devmem 0x201200E0 32 0xe # Use an external I2S CODEC such as AIC31 or AK7756, etc., AIO MCLK out, CODEC AIO TX MCLK
 
         if [ $b_arg_online -eq 1 ]; then
                 # -------------vi vpss online
