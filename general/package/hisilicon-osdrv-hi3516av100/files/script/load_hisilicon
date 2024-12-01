@@ -323,9 +323,10 @@ insert_sns() {
 
 insert_ko() {
 		echo "==== load insert_ko ===="
+		cd /lib/modules/4.9.37/hisilicon
         sys_config
 
-        insert_mmz
+        insmod mmz.ko mmz=anonymous,0,$mmz_start,$mmz_size anony=1 || report_error
 
         insmod hi_media.ko
         insmod hi3516a_base.ko
@@ -336,7 +337,7 @@ insert_ko() {
         insmod hi3516a_region.ko
         insmod hi3516a_vgs.ko
 
-        insert_isp
+        insmod hi3516a_isp.ko
 
         insmod hi3516a_viu.ko detect_err_frame=10
         insmod hi3516a_vpss.ko rfr_frame_comp=1

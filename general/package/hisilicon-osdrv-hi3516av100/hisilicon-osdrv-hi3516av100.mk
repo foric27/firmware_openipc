@@ -67,23 +67,23 @@ define HISILICON_OSDRV_HI3516AV100_INSTALL_TARGET_CMDS
 	$(INSTALL) -m 644 -t $(TARGET_DIR)/usr/lib/ $(HISILICON_OSDRV_HI3516AV100_PKGDIR)/files/lib/lib_hiaf.so
 	$(INSTALL) -m 644 -t $(TARGET_DIR)/usr/lib/ $(HISILICON_OSDRV_HI3516AV100_PKGDIR)/files/lib/lib_hiawb.so
 	$(INSTALL) -m 644 -t $(TARGET_DIR)/usr/lib/ $(HISILICON_OSDRV_HI3516AV100_PKGDIR)/files/lib/lib_hidefog.so
-	# $(INSTALL) -m 644 -t $(TARGET_DIR)/usr/lib/ $(HISILICON_OSDRV_HI3516AV100_PKGDIR)/files/lib/libhive_AEC.so
+	$(INSTALL) -m 644 -t $(TARGET_DIR)/usr/lib/ $(HISILICON_OSDRV_HI3516AV100_PKGDIR)/files/lib/libhive_AEC.so
 	$(INSTALL) -m 644 -t $(TARGET_DIR)/usr/lib/ $(HISILICON_OSDRV_HI3516AV100_PKGDIR)/files/lib/libhive_AGC.so
 	$(INSTALL) -m 644 -t $(TARGET_DIR)/usr/lib/ $(HISILICON_OSDRV_HI3516AV100_PKGDIR)/files/lib/libhive_ANR.so
 	$(INSTALL) -m 644 -t $(TARGET_DIR)/usr/lib/ $(HISILICON_OSDRV_HI3516AV100_PKGDIR)/files/lib/libhive_common.so
-	# $(INSTALL) -m 644 -t $(TARGET_DIR)/usr/lib/ $(HISILICON_OSDRV_HI3516AV100_PKGDIR)/files/lib/libhive_DRC.so
-	# $(INSTALL) -m 644 -t $(TARGET_DIR)/usr/lib/ $(HISILICON_OSDRV_HI3516AV100_PKGDIR)/files/lib/libhive_EQ.so
-	# $(INSTALL) -m 644 -t $(TARGET_DIR)/usr/lib/ $(HISILICON_OSDRV_HI3516AV100_PKGDIR)/files/lib/libhive_GAIN.so
-	# $(INSTALL) -m 644 -t $(TARGET_DIR)/usr/lib/ $(HISILICON_OSDRV_HI3516AV100_PKGDIR)/files/lib/libhive_HDR.so
+	$(INSTALL) -m 644 -t $(TARGET_DIR)/usr/lib/ $(HISILICON_OSDRV_HI3516AV100_PKGDIR)/files/lib/libhive_DRC.so
+	$(INSTALL) -m 644 -t $(TARGET_DIR)/usr/lib/ $(HISILICON_OSDRV_HI3516AV100_PKGDIR)/files/lib/libhive_EQ.so
+	$(INSTALL) -m 644 -t $(TARGET_DIR)/usr/lib/ $(HISILICON_OSDRV_HI3516AV100_PKGDIR)/files/lib/libhive_GAIN.so
+	$(INSTALL) -m 644 -t $(TARGET_DIR)/usr/lib/ $(HISILICON_OSDRV_HI3516AV100_PKGDIR)/files/lib/libhive_HDR.so
 	$(INSTALL) -m 644 -t $(TARGET_DIR)/usr/lib/ $(HISILICON_OSDRV_HI3516AV100_PKGDIR)/files/lib/libhive_HPF.so
-	# $(INSTALL) -m 644 -t $(TARGET_DIR)/usr/lib/ $(HISILICON_OSDRV_HI3516AV100_PKGDIR)/files/lib/libhive_MBC.so
-	# $(INSTALL) -m 644 -t $(TARGET_DIR)/usr/lib/ $(HISILICON_OSDRV_HI3516AV100_PKGDIR)/files/lib/libhive_PEQ.so
-	# $(INSTALL) -m 644 -t $(TARGET_DIR)/usr/lib/ $(HISILICON_OSDRV_HI3516AV100_PKGDIR)/files/lib/libhive_RES.so
-	# $(INSTALL) -m 644 -t $(TARGET_DIR)/usr/lib/ $(HISILICON_OSDRV_HI3516AV100_PKGDIR)/files/lib/libhive_RNR.so
+	$(INSTALL) -m 644 -t $(TARGET_DIR)/usr/lib/ $(HISILICON_OSDRV_HI3516AV100_PKGDIR)/files/lib/libhive_MBC.so
+	$(INSTALL) -m 644 -t $(TARGET_DIR)/usr/lib/ $(HISILICON_OSDRV_HI3516AV100_PKGDIR)/files/lib/libhive_PEQ.so
+	$(INSTALL) -m 644 -t $(TARGET_DIR)/usr/lib/ $(HISILICON_OSDRV_HI3516AV100_PKGDIR)/files/lib/libhive_RES.so
+	$(INSTALL) -m 644 -t $(TARGET_DIR)/usr/lib/ $(HISILICON_OSDRV_HI3516AV100_PKGDIR)/files/lib/libhive_RNR.so
 	$(INSTALL) -m 644 -t $(TARGET_DIR)/usr/lib/ $(HISILICON_OSDRV_HI3516AV100_PKGDIR)/files/lib/libisp.so
 	$(INSTALL) -m 644 -t $(TARGET_DIR)/usr/lib/ $(HISILICON_OSDRV_HI3516AV100_PKGDIR)/files/lib/libive.so
 	$(INSTALL) -m 644 -t $(TARGET_DIR)/usr/lib/ $(HISILICON_OSDRV_HI3516AV100_PKGDIR)/files/lib/libmpi.so
-	# $(INSTALL) -m 644 -t $(TARGET_DIR)/usr/lib/ $(HISILICON_OSDRV_HI3516AV100_PKGDIR)/files/lib/libslice_trans.so
+	$(INSTALL) -m 644 -t $(TARGET_DIR)/usr/lib/ $(HISILICON_OSDRV_HI3516AV100_PKGDIR)/files/lib/libslice_trans.so
 	$(INSTALL) -m 644 -t $(TARGET_DIR)/usr/lib/ $(HISILICON_OSDRV_HI3516AV100_PKGDIR)/files/lib/libtde.so
 	$(INSTALL) -m 644 -t $(TARGET_DIR)/usr/lib/ $(HISILICON_OSDRV_HI3516AV100_PKGDIR)/files/lib/libupvqe.so
 	$(INSTALL) -m 644 -t $(TARGET_DIR)/usr/lib/ $(HISILICON_OSDRV_HI3516AV100_PKGDIR)/files/lib/libVoiceEngine.so
