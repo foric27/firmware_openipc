@@ -16,13 +16,14 @@
 
 SNS_TYPE=mn34220        # sensor type
 
-mem_total=512;          # 512M, total mem
+mem_total=128;          # 256M, total mem
 mem_start=0x80000000;   # phy mem start
 
-os_mem_size=64;         # 64M, os mem
+os_mem_size=50;         # 64M, os mem
 mmz_start=0x84000000;   # mmz start addr
-mmz_size=128M;          # 128M, mmz size
+mmz_size=78M;          # 192M, mmz size
 
+mem_small_lin=0x1
 ##################################################################
 
 report_error()
@@ -118,8 +119,8 @@ insert_sns()
 		ov4689)
 			himm 0x200f0050 0x2;                # i2c0_scl
 			himm 0x200f0054 0x2;                # i2c0_sda
-			himm 0x2003002c 0xE0007             # sensor unreset, clk 24MHz, VI 250MHz
-			himm 0x20030104 0x0;
+			#himm 0x2003002c 0xE0007             # sensor unreset, clk 24MHz, VI 250MHz
+			#himm 0x20030104 0x0;
 			;;
 		ar0230|ar0237)
 			himm 0x200f0050 0x2;                # i2c0_scl
@@ -162,14 +163,17 @@ insert_ko()
 	sys_config;
 
 	# driver load
+  os_mem=`cat /proc/cmdline  | awk '{print $1}' | sed s/mem=//`
+  os_mem_size=`echo $os_mem | sed s/M//`
+  mmz_size=`echo "$mem_total $os_mem_size"|awk '{printf("%d",$1-$2)}'`M
+  mmz_start=`echo "$mem_start $mem_small_lin $os_mem_size"|awk '{printf("0x%03x00000",$1+$2*$3)}'`
+  echo mem_start=$mem_start os_mem=$os_mem mmz_start=$mmz_start mmz_size=$mmz_size	
 	insmod mmz.ko mmz=anonymous,0,$mmz_start,$mmz_size anony=1 || report_error
 	insmod hi_media.ko
 	insmod hi3516a_base.ko
 	
-	insmod hi3516a_sys.ko vi_vpss_online=$b_arg_online sensor=$SNS_TYPE mem_total=$mem_total
-	if [[ $? -ne 0 ]]; then 
-		exit;
-	fi  
+	insmod hi3516a_sys.ko vi_vpss_online=$b_arg_online sensor=$SNS_TYPE
+
 
 	insmod hi3516a_tde.ko
 	insmod hi3516a_region.ko
@@ -178,7 +182,7 @@ insert_ko()
 	insmod hi3516a_isp.ko
 	insmod hi3516a_viu.ko detect_err_frame=10;
 	insmod hi3516a_vpss.ko
-	insmod hi3516a_vou.ko lowPowerMode=0
+	insmod hi3516a_vou.ko #lowPowerMode=0
 	#insmod hi3516a_vou.ko detectCycle=0            #close dac detect
 	insmod hifb.ko video="hifb:vram0_size:1620"     # default pal
 
@@ -322,7 +326,7 @@ do
 			exit;
 		fi
 
-		calc_mmz_info;
+	#	calc_mmz_info;
 	fi
 
 	if [ $b_arg_sensor -eq 1 ] ; then

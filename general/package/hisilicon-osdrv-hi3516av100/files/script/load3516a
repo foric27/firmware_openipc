@@ -15,12 +15,15 @@
 
 SNS_TYPE=mn34220        # sensor type
 
-mem_total=512;          # 512M, total mem
-mem_start=0x80000000;   # phy mem start
+mem_total=128;          # 256M, total mem
+mem_start=0x800;        # phy mem start
 
 os_mem_size=64;         # 64M, os mem
 mmz_start=0x84000000;   # mmz start addr
-mmz_size=128M;          # 128M, mmz size
+mmz_size=192M;          # 192M, mmz size
+
+mem_small_lin=0x1
+
 
 ##################################################################
 
@@ -130,8 +133,8 @@ insert_sns()
 		ov4689)
 			himm 0x200f0050 0x2;                # i2c0_scl
 			himm 0x200f0054 0x2;                # i2c0_sda
-			himm 0x2003002c 0xE0007             # sensor unreset, clk 24MHz, VI 250MHz
-			himm 0x20030104 0x0;
+			#himm 0x2003002c 0xE0007             # sensor unreset, clk 24MHz, VI 250MHz
+			#himm 0x20030104 0x0;
 			;;
 		ar0230|ar0237)
 			himm 0x200f0050 0x2;                # i2c0_scl
@@ -174,14 +177,16 @@ insert_ko()
 	sys_config;
 
 	# driver load
+  os_mem=`cat /proc/cmdline  | awk '{print $1}' | sed s/mem=//`
+  os_mem_size=`echo $os_mem | sed s/M//`
+  mmz_size=`echo "$mem_total $os_mem_size"|awk '{printf("%d",$1-$2)}'`M
+  mmz_start=`echo "$mem_start $mem_small_lin $os_mem_size"|awk '{printf("0x%03x00000",$1+$2*$3)}'`
+  echo mem_start=$mem_start os_mem=$os_mem mmz_start=$mmz_start mmz_size=$mmz_size	
 	insmod mmz.ko mmz=anonymous,0,$mmz_start,$mmz_size anony=1 || report_error
 	insmod hi_media.ko
 	insmod hi3516a_base.ko
 	
-	insmod hi3516a_sys.ko vi_vpss_online=$b_arg_online sensor=$SNS_TYPE mem_total=$mem_total
-	if [[ $? -ne 0 ]]; then 
-		exit;
-	fi  
+	insmod hi3516a_sys.ko vi_vpss_online=$b_arg_online sensor=$SNS_TYPE
 
 	insmod hi3516a_tde.ko
 	insmod hi3516a_region.ko
@@ -190,9 +195,9 @@ insert_ko()
 	insmod hi3516a_isp.ko
 	insmod hi3516a_viu.ko detect_err_frame=10;
 	insmod hi3516a_vpss.ko
-	insmod hi3516a_vou.ko lowPowerMode=0
+	#insmod hi3516a_vou.ko lowPowerMode=0
 	#insmod hi3516a_vou.ko detectCycle=0            #close dac detect
-	insmod hifb.ko video="hifb:vram0_size:1620"     # default pal
+	#insmod hifb.ko video="hifb:vram0_size:405"     # default pal
 
 	insmod hi3516a_rc.ko
 	insmod hi3516a_venc.ko
@@ -201,13 +206,13 @@ insert_ko()
 	insmod hi3516a_h265e.ko
 	insmod hi3516a_jpege.ko
 	insmod hi3516a_vda.ko
-	insmod hi3516a_ive.ko
+	#insmod hi3516a_ive.ko
 
 	insmod extdrv/sensor_i2c.ko
 	insmod extdrv/pwm.ko
 	insmod extdrv/piris.ko
 	#insmod extdrv/adv_7441.ko
-	insmod extdrv/sil9024.ko norm=12    #1080P@30fps
+	#insmod extdrv/sil9024.ko norm=12    #1080P@30fps
 
 	echo "==== Your input Sensor type is $SNS_TYPE ===="
 	#insert_sns > /dev/null
@@ -216,6 +221,9 @@ insert_ko()
 	insert_audio
 	echo "==== Your input Sensor type is $SNS_TYPE ===="
 
+    insmod hi_cipher.ko
+    insmod hi_rtc.ko
+    insmod wdt.ko nowayout=1 nodeamon=1
 	insmod hi_mipi.ko
 	#insmod hi3516a_pm.ko
 }
@@ -227,9 +235,10 @@ remove_ko()
 	remove_sns
 
 	rmmod -w sil9024 &> /dev/null
+	rmmod -w sil9034 &> /dev/null
 	rmmod -w pwm
 
-	rmmod -w hi3516a_ive
+	#rmmod -w hi3516a_ive
 	rmmod -w hi3516a_vda
 	
 	rmmod -w hi3516a_rc
@@ -239,8 +248,8 @@ remove_ko()
 	rmmod -w hi3516a_chnl
 	rmmod -w hi3516a_venc
 
-	rmmod -w hifb
-	rmmod -w hi3516a_vou
+	#rmmod -w hifb
+	#rmmod -w hi3516a_vou
 	rmmod -w hi3516a_vpss
 	rmmod -w hi3516a_viu
 	rmmod -w hi_mipi
@@ -332,7 +341,7 @@ do
 			exit;
 		fi
 
-		calc_mmz_info;
+	#	calc_mmz_info;
 	fi
 
 	if [ $b_arg_sensor -eq 1 ] ; then

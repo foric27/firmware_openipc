@@ -76,14 +76,17 @@ sys_config() {
         # pinmux configuration
         devmem 0x200f0000 32 0x1 # 0: GPIO0_5, 1: SENSOR_CLK
         devmem 0x200f0004 32 0x1 # 1: FLASH_TRIG, 0: GPIO0_6, 2: SPI1_CSN1
-        devmem 0x200f0008 32 0x1 # 1: SHUTTER_TRIG, 0: GPIO0_7, 2: SPI1_CSN2
+        devmem 0x200f0008 32 0x0 # 1: SHUTTER_TRIG, 0: GPIO0_7, 2: SPI1_CSN2
+		
+		devmem 0x200f0070 32 0x1;		# i2c2_sda
+		devmem 0x200f0074 32 0x1;		# i2c2_scl
 
         # clock configuration
         devmem 0x20030030 32 0x00004005 # AVC-300M VGS-300M VPSS-250M VEDU-300M mda1axi 250M mda0axi 300M DDR-250
         devmem 0x20030104 32 0x3        # VICAP-198M VPSS-198M
         devmem 0x2003002c 32 0x90007    # VICAP-250M, ISP unreset & clk en, Sensor clk en-37.125M, clk reverse
         #devmem 0x20030034 32 0xffc             # VDP-1080p@60fps unreset & clk en
-        #devmem 0x20030034 32 0xef74            # VDP-PAL/NTSC
+        devmem 0x20030034 32 0xef74            # VDP-PAL/NTSC
         devmem 0x20030040 32 0x2002 # VEDU0 AVC unreset & clk en
         devmem 0x20030048 32 0x2    # VPSS0 unreset & clk en
 
@@ -100,8 +103,8 @@ sys_config() {
         #devmem 0x200300d8 32 0xa;      # ddrt
 
         # system configuration
-        #devmem 0x201200E0 32 0xd # internal codec:AIO MCLK out, CODEC AIO TX MCLK # Internal CODEC, MIC or LINEIN analog input, ACOUT analog output
-		devmem 0x201200E0 32 0xe # Use an external I2S CODEC such as AIC31 or AK7756, etc., AIO MCLK out, CODEC AIO TX MCLK
+        devmem 0x201200E0 32 0xd # internal codec:AIO MCLK out, CODEC AIO TX MCLK # Internal CODEC, MIC or LINEIN analog input, ACOUT analog output
+		#devmem 0x201200E0 32 0xe # Use an external I2S CODEC such as AIC31 or AK7756, etc., AIO MCLK out, CODEC AIO TX MCLK
 
         if [ $b_arg_online -eq 1 ]; then
                 # -------------vi vpss online
@@ -226,8 +229,8 @@ insert_sns() {
         ov4689)
                 devmem 0x200f0050 32 0x2     # i2c0_scl
                 devmem 0x200f0054 32 0x2     # i2c0_sda
-                devmem 0x2003002c 32 0xE0007 # sensor unreset, clk 24MHz, VI 250MHz
-                devmem 0x20030104 32 0x0
+                #devmem 0x2003002c 32 0xE0007 # sensor unreset, clk 24MHz, VI 250MHz
+                #devmem 0x20030104 32 0x0
                 ;;
         ar0230 | ar0237 | sc4236)
                 devmem 0x200f0050 32 0x2 # i2c0_scl
