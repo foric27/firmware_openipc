@@ -42,8 +42,8 @@ insert_audio()
 	insmod hi3516a_ao.ko
 	insmod hi3516a_aenc.ko
 	insmod hi3516a_adec.ko
-	#insmod extdrv/tlv_320aic31.ko
-	#insmod extdrv/ak7756.ko 
+	#insmod tlv_320aic31.ko
+	#insmod ak7756.ko 
 	echo "insert audio"
 }
 
@@ -72,7 +72,7 @@ insert_sns()
 			#himm 0x2003002c 0xb0007            # sensor unreset, clk 27MHz, VI 250MHz
 			himm 0x2003002c 0x90007             # sensor unreset, clk 37.125MHz, VI 250MHz
 			himm 0x20030104 0x0;                # VI 250MHz
-			insmod extdrv/sensor_spi.ko
+			insmod sensor_spi.ko
 			;;			
 		imx178)
 			himm 0x200f0050 0x2;                # i2c0_scl
@@ -88,7 +88,7 @@ insert_sns()
 			
 			himm 0x2003002c 0x90007             # sensor unreset, clk 37.125MHz, VI 250MHz
 
-			insmod extdrv/sensor_spi.ko
+			insmod sensor_spi.ko
 			;;
 		imx117)
 			himm 0x200f0050 0x1;                # spi0_sclk
@@ -110,7 +110,7 @@ insert_sns()
 
 			himm 0x2003002c 0x90007             # sensor unreset, clk 37.125MHz, VI 250MHz
 					
-			insmod extdrv/sensor_spi.ko sensor=imx117
+			insmod sensor_spi.ko sensor=imx117
 			;;	
 		mn34220)
 			himm 0x200f0050 0x2;                # i2c0_scl
@@ -208,11 +208,11 @@ insert_ko()
 	insmod hi3516a_vda.ko
 	#insmod hi3516a_ive.ko
 
-	insmod extdrv/sensor_i2c.ko
-	insmod extdrv/pwm.ko
-	insmod extdrv/piris.ko
-	#insmod extdrv/adv_7441.ko
-	#insmod extdrv/sil9024.ko norm=12    #1080P@30fps
+	insmod sensor_i2c.ko
+	insmod pwm.ko
+	insmod piris.ko
+	#insmod adv_7441.ko
+	#insmod sil9024.ko norm=12    #1080P@30fps
 
 	echo "==== Your input Sensor type is $SNS_TYPE ===="
 	#insert_sns > /dev/null
