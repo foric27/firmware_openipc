@@ -6,14 +6,14 @@
 # SoC detect
 chipid=$(ipcinfo --chip-name)
 
-mem_total=128;          # 256M, total mem
-mem_start=0x80000000;   # phy mem start
+# MMZ config
+mem_start=0x80000000 # phy mem start
 
-os_mem_size=50;         # 64M, os mem
-mmz_start=0x84000000;   # mmz start addr
-mmz_size=78M;          # 192M, mmz size
+mem_total=$(fw_printenv -n totalmem | tr -d 'M')
+mem_total=${mem_total:=128}
 
-mem_small_lin=0x1
+os_mem_size=$(fw_printenv -n osmem | tr -d 'M')
+os_mem_size=${os_mem_size:=32}
 
 report_error() {
         echo "******* Error: There's something wrong, please check! *****"
@@ -274,13 +274,6 @@ insert_sns() {
 insert_ko() {
 		cd /lib/modules/4.9.37/hisilicon
         sys_config
-
-		# driver load
-	  os_mem=`cat /proc/cmdline  | awk '{print $1}' | sed s/mem=//`
-	  os_mem_size=`echo $os_mem | sed s/M//`
-	  mmz_size=`echo "$mem_total $os_mem_size"|awk '{printf("%d",$1-$2)}'`M
-	  mmz_start=`echo "$mem_start $mem_small_lin $os_mem_size"|awk '{printf("0x%03x00000",$1+$2*$3)}'`
-	  echo mem_start=$mem_start os_mem=$os_mem mmz_start=$mmz_start mmz_size=$mmz_size
 	 
 		insmod mmz.ko mmz=anonymous,0,$mmz_start,$mmz_size anony=1 || report_error
 
@@ -466,7 +459,7 @@ if [ $os_mem_size -ge $mem_total ]; then
         exit
 fi
 
-#calc_mmz_info
+calc_mmz_info
 
 #######################Action###############################
 
