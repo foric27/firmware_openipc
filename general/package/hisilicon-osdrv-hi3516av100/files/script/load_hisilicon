@@ -20,32 +20,31 @@ report_error() {
         exit 1
 }
 
-# insert_mmz() {
-        # insmod mmz.ko mmz=anonymous,0,$mmz_start,$mmz_size anony=1 || report_error
-# }
+insert_detect() {
+        cd /lib/modules/4.9.37/hisilicon
+        insmod mmz.ko mmz=anonymous,0,$mmz_start,$mmz_size anony=1 || report_error
+        insmod hi_media.ko
+        insmod hi3516a_base.ko
+        insmod hi3516a_sys.ko vi_vpss_online=$b_arg_online sensor=unknown mem_total=$mem_total
+        #insert_isp
+        insmod hi3516a_isp.ko
+		insmod sensor_i2c.ko
+        insmod sensor_spi.ko
+        SENSOR=ar0230 insert_sns
+		insert_audio
+		echo "==== insert_detect $SENSOR ===="
+}
 
-# insert_detect() {
-        # cd /lib/modules/4.9.37/hisilicon
-        # insert_mmz
-        # insmod hi_media.ko
-        # insmod hi3516a_base.ko
-        # insmod hi3516a_sys.ko vi_vpss_online=$b_arg_online sensor=unknown mem_total=$mem_total
-        # insert_isp
-        # insmod sensor_i2c.ko
-        # insmod sensor_spi.ko
-        # SENSOR=ar0230 insert_sns
-# }
-
-# remove_detect() {
-        # rmmod -w sensor_spi
-        # rmmod -w sensor_i2c
-        # rmmod -w hi3516a_isp
-        # rmmod -w hi3516a_sys
-        # rmmod -w hi3516a_base
-        # rmmod -w hi_media
-        # rmmod -w mmz
-        # rmmod -w sys_config
-# }
+remove_detect() {
+        rmmod -w sensor_spi
+        rmmod -w sensor_i2c
+        rmmod -w hi3516a_isp
+        rmmod -w hi3516a_sys
+        rmmod -w hi3516a_base
+        rmmod -w hi_media
+        rmmod -w mmz
+        rmmod -w sys_config
+}
 
 insert_audio()
 {
@@ -288,7 +287,6 @@ insert_ko() {
         insmod hi3516a_region.ko
         insmod hi3516a_vgs.ko
 
-        #insert_isp
 		insmod hi3516a_isp.ko
 		
         insmod hi3516a_viu.ko detect_err_frame=10
@@ -480,10 +478,10 @@ else
                 export SENSOR=${SENSOR_ENV}
                 logger -s -p daemon.info -t hisilicon "Get data from environment and set SENSOR as ${SENSOR}"
         else
-                insert_ko
+                insert_detect
                 SENSOR_DETECT=$(ipcinfo --short-sensor)
                 export SENSOR=${SENSOR_DETECT:=unknown}
-                remove_ko
+                remove_detect
                 logger -s -p daemon.info -t hisilicon "Get data from ipcinfo and set SENSOR as ${SENSOR}"
                 fw_setenv sensor $SENSOR && logger -s -p daemon.info -t hisilicon "Write detected ${SENSOR} to U-Boot ENV"
         fi
